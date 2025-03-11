@@ -1,0 +1,2 @@
+driver: postgres
+dsn: postgres://auth_user:auth_pass@localhost:5432/auth_db?sslmode=disable

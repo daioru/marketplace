@@ -5,22 +5,30 @@ import (
 	"net"
 
 	"github.com/daioru/marketplace/internal/auth"
-	"google.golang.org/grpc"
-
+	"github.com/daioru/marketplace/internal/auth/db"
 	pb "github.com/daioru/marketplace/internal/generated/api/proto"
+	"github.com/pressly/goose/v3"
+	"google.golang.org/grpc"
 )
 
 func main() {
-	listener, err := net.Listen("tcp", ":50051")
+	database := db.InitDB()
+
+	err := goose.Up(database.DB, "migrations/auth")
 	if err != nil {
-		log.Fatalf("Failed to listen: %v", err)
+		log.Fatalf("Auth migration error: %v", err)
 	}
 
-	grpcServer := grpc.NewServer()
-	pb.RegisterAuthServiceServer(grpcServer, &auth.AuthServiceServer{})
+	server := grpc.NewServer()
+	authService := &auth.AuthService{DB: database}
+	pb.RegisterAuthServiceServer(server, authService)
 
-	log.Println("Auth service is running on port 50051...")
-	if err := grpcServer.Serve(listener); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
+	listener, err := net.Listen("tcp", ":50051")
+	if err != nil {
+		log.Fatalf("Error starting server: %v", err)
+	}
+	log.Println("Auth-service started on port 50051...")
+	if err := server.Serve(listener); err != nil {
+		log.Fatalf("Server error: %v", err)
 	}
 }
