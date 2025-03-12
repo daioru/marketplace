@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth;
 
-option go_package = "myproject/api/proto/auth";
+option go_package = "github.com/daioru/marketplace/api/proto/auth";
 
 service AuthService {
   rpc Register(RegisterRequest) returns (RegisterResponse);
