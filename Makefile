@@ -7,5 +7,8 @@ generate:
 		--go_opt=paths=source_relative --go-grpc_opt=paths=source_relative \
 		$(PROTO_DIR)/*.proto
 
-migrate_auth:
+migrate_auth_up:
 	goose -dir migrations/auth postgres "$(AUTH_DNS)" up
+
+migrate_auth_down:
+	goose -dir migrations/auth postgres "$(AUTH_DNS)" down

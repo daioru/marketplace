@@ -70,9 +70,12 @@ func (s *AuthTestSuite) TestRegisterAndLogin() {
 		resp, err := s.Server.Login(context.Background(), req)
 
 		assert.NoError(s.T(), err)
-		assert.NotEmpty(s.T(), resp.Token)
+		assert.NotEmpty(s.T(), resp.AccessToken)
+		assert.NotEmpty(s.T(), resp.AccessToken)
 	})
 }
+
+
 
 func TestAuthService(t *testing.T) {
 	suite.Run(t, new(AuthTestSuite))

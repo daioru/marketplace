@@ -35,10 +35,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("Login failed: %v", err)
 	}
-	log.Println("Login response", loginResp.Token)
+	log.Println("Login response access", loginResp.AccessToken)
+	log.Println("Login response refresh", loginResp.RefreshToken)
 
 	validateResp, err := client.ValidateToken(context.Background(), &pb.ValidateTokenRequest{
-		Token: loginResp.Token,
+		Token: loginResp.AccessToken,
 	})
 	if err != nil {
 		log.Fatalf("ValidateToken failed: %v", err)
