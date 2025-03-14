@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	pb "github.com/daioru/marketplace/internal/generated/api/proto"
+	pb "github.com/daioru/marketplace/api/proto/auth"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 

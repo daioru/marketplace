@@ -4,9 +4,9 @@ import (
 	"log"
 	"net"
 
+	pb "github.com/daioru/marketplace/api/proto/auth"
 	"github.com/daioru/marketplace/internal/auth"
 	"github.com/daioru/marketplace/internal/auth/db"
-	pb "github.com/daioru/marketplace/internal/generated/api/proto"
 	"github.com/pressly/goose/v3"
 	"google.golang.org/grpc"
 )

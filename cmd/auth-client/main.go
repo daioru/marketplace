@@ -6,7 +6,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	pb "github.com/daioru/marketplace/internal/generated/api/proto"
+	pb "github.com/daioru/marketplace/api/proto/auth"
 )
 
 func main() {

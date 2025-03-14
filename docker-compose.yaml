@@ -1,7 +1,29 @@
 services:
-  postgres:
+  auth-service:
+    container_name: auth-service
+    build:
+      context: .
+      dockerfile: ./cmd/auth-service/Dockerfile
+    ports:
+      - "50051:50051"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL="postgres://auth_user:auth_pass@db:5432/auth_db?sslmode=disable"
+
+  api-gateway:
+    container_name: api-gateway
+    build: 
+      context: .
+      dockerfile: ./cmd/api-gateway/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-service
+
+  db:
+    container_name: db
     image: postgres:17.2
-    container_name: postgres_auth
     restart: always
     environment:
       POSTGRES_USER: auth_user
@@ -11,6 +33,10 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "auth_user", "-d", "auth_db"]
+      interval: 10s
+      retries: 5
 
 volumes:
   postgres_data:

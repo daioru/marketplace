@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/daioru/marketplace/internal/auth"
-	pb "github.com/daioru/marketplace/internal/generated/api/proto"
+	pb "github.com/daioru/marketplace/api/proto/auth"
 	migrations "github.com/daioru/marketplace/migrations/auth"
 
 	"github.com/jmoiron/sqlx"
